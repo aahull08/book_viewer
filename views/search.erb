@@ -1,0 +1,38 @@
+<h2 class="content-subhead">Search</h2>
+
+<form action="/search" method="get">
+  <input name="query" value="<%= params[:query] %>">
+  <button type="submit">Search</button>
+</form>
+
+<!--<%# if params[:query] %>-->
+<!--  <%# if @switch %>-->
+<!--    <br>-->
+<!--    <%#= @output %>-->
+<!--  <%# else %>-->
+<!--    <h2 class="content-subhead">Results for '<%#= @search_string %>'</h2> -->
+<!--    <ul>-->
+<!--    <#% @output.each do |ch_num, ch_title| %>-->
+<!--      <li><a href="/chapters/<%#= ch_num %>"> <%#= ch_title %> </a></li>-->
+<!--    <%# end %>-->
+<!--    </ul>-->
+<!--  <%# end %>-->
+<!--<%# end %>-->
+
+
+<% if params[:query] %>
+  <% if @results.empty? %>
+    <p>Sorry, no matches were found.</p>
+  <% else %>
+    <h2 class="content-subhead">Results for '<%= params[:query]%>'</h2>
+
+    <ul>
+      <% @results.each do |result| %>
+        <li><%= result[:name] %></li>
+        <% result[:para_content].each_with_index do |content, index| %>
+          <li><a href="/chapters/<%= result[:number] %>#<%= result[:para_numbers][index] %>"><%= content %></a></li>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
